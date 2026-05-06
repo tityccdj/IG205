@@ -11,6 +11,7 @@ public class Player : MonoBehaviour
     [SerializeField] private bool isSwordActive = false;
 
     [Header("Movement")]
+    [SerializeField] private bool no_clip;
     [SerializeField] private bool isFacingRight = true;
     [SerializeField] private Vector2 moveInput;
     [SerializeField] private float moveSpeed=5.0f;
@@ -30,7 +31,12 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        if (Input.GetKeyDown(KeyCode.V))
+        {
+            no_clip = !no_clip;
+            UpdateNoClip();
+        }
+       
     }
 
     private void FixedUpdate()
@@ -82,6 +88,20 @@ public class Player : MonoBehaviour
     {
         gameObject.transform.localScale = new Vector3(-gameObject.transform.localScale.x, gameObject.transform.localScale.y, gameObject.transform.localScale.z);
         isFacingRight = !isFacingRight;
+    }
+
+    public void UpdateNoClip()
+    {
+        if (no_clip)
+        {
+            jumpForce = 10;
+            moveSpeed = 10; // temp
+        }
+        else
+        {
+            jumpForce = 5;
+            moveSpeed = 5;
+        }
     }
 
     #endregion
