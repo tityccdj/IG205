@@ -4,6 +4,8 @@ public class GameManager : MonoBehaviour
 {
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     public static GameManager Instance;
+    public int MaxHealth = 3;
+    public float moveSpeed = 5f;
     private void Awake()
     {
         if (Instance == null)

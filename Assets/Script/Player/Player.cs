@@ -1,9 +1,15 @@
 
+using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class Player : MonoBehaviour
 {
+    [Header("Player Info")]
+    [SerializeField] private int CurrentHealth = 3;
+    [SerializeField] private float CurrentMovespeed = 5.0f;
+    [SerializeField] private GameObject Devmodbox;
+
     [Header("Weapon")]
     public GameObject Gun;
     public GameObject Sword;
@@ -11,21 +17,32 @@ public class Player : MonoBehaviour
     [SerializeField] private bool isSwordActive = false;
 
     [Header("Movement")]
-    [SerializeField] private bool no_clip;
+    [SerializeField] private bool DevMode;
     [SerializeField] private bool isFacingRight = true;
     [SerializeField] private Vector2 moveInput;
-    [SerializeField] private float moveSpeed=5.0f;
     [SerializeField] private float jumpForce=5.0f;
     [SerializeField] private bool isGrounded;
     private Rigidbody2D rb;
+
+  
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        if (GameManager.Instance != null)
+        {
+            CurrentHealth = GameManager.Instance.MaxHealth;
+            CurrentMovespeed = GameManager.Instance.moveSpeed;
+        }
+        Devmodbox = GameObject.Find("DevModeBox");
+        Devmodbox.SetActive(false);
+        DevMode = false;
         rb = GetComponent<Rigidbody2D>();
         isSwordActive = false;
         isGunActive = true;
         isFacingRight = true;
         UpdateWeapon();
+
     }
 
     // Update is called once per frame
@@ -33,10 +50,11 @@ public class Player : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.V))
         {
-            no_clip = !no_clip;
-            UpdateNoClip();
+            DevMode = !DevMode;
+            Devmodbox.SetActive(DevMode);
+            UpdateDevMode();
         }
-       
+
     }
 
     private void FixedUpdate()
@@ -56,6 +74,10 @@ public class Player : MonoBehaviour
         isSwordActive = !isSwordActive;
         UpdateWeapon();
     }
+
+
+
+
     #endregion
 
     #region Movement
@@ -81,8 +103,7 @@ public class Player : MonoBehaviour
         {
             Flip();
         }
-
-        rb.linearVelocity = new Vector2(movement.x * moveSpeed, rb.linearVelocity.y);
+        rb.linearVelocity = new Vector2(movement.x * CurrentMovespeed, rb.linearVelocity.y);
     }
     public void Flip()
     {
@@ -90,17 +111,17 @@ public class Player : MonoBehaviour
         isFacingRight = !isFacingRight;
     }
 
-    public void UpdateNoClip()
+    public void UpdateDevMode()
     {
-        if (no_clip)
+        if (DevMode)
         {
             jumpForce = 10;
-            moveSpeed = 10; // temp
+            CurrentMovespeed = 10; // temp
         }
         else
         {
             jumpForce = 5;
-            moveSpeed = 5;
+            CurrentMovespeed = 5;
         }
     }
 
@@ -123,5 +144,14 @@ public class Player : MonoBehaviour
     }
     #endregion
 
-
+    #region Misc
+    public int GetCurrentHealth()
+    {
+        return CurrentHealth;
+    }
+    public float GetCurrentMovespeed()
+    {
+        return CurrentMovespeed;
+    }
+    #endregion
 }
