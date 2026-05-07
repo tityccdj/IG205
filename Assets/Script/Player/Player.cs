@@ -13,12 +13,14 @@ public class Player : MonoBehaviour
     [Header("Weapon")]
     public GameObject Gun;
     public GameObject Sword;
+    public GameObject BulletPrefab;
+    public GameObject BulletSpawn;
     [SerializeField] private bool isGunActive = true;
     [SerializeField] private bool isSwordActive = false;
 
     [Header("Movement")]
     [SerializeField] private bool DevMode;
-    [SerializeField] private bool isFacingRight = true;
+    [SerializeField] public bool isFacingRight { get; private set; }
     [SerializeField] private Vector2 moveInput;
     [SerializeField] private float jumpForce=5.0f;
     [SerializeField] private bool isGrounded;
@@ -29,6 +31,8 @@ public class Player : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        BulletSpawn = GameObject.Find("PlayerBulletSpawn");
+        isFacingRight = true;
         if (GameManager.Instance != null)
         {
             CurrentHealth = GameManager.Instance.MaxHealth;
@@ -75,6 +79,17 @@ public class Player : MonoBehaviour
         UpdateWeapon();
     }
 
+    public void OnAttack(InputValue input)
+    {
+        if (isGunActive)
+        {
+            Instantiate(BulletPrefab, BulletSpawn.transform.position, BulletSpawn.transform.rotation);
+        }
+        else if (isSwordActive)
+        {
+            // Implement sword attack logic here
+        }
+    }
 
 
 

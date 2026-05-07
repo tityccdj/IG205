@@ -8,12 +8,12 @@ public class PlayerAim : MonoBehaviour
     private Camera mainCam;
     public Vector2 direction;
 
-    public Transform player;
+    public Player player;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         mainCam = Camera.main;
-        player = GameObject.Find("Player").transform;
+        player = GameObject.Find("Player").GetComponent<Player>();
     }
 
     // Update is called once per frame
@@ -30,31 +30,21 @@ public class PlayerAim : MonoBehaviour
         Vector2 mousepos = mainCam.ScreenToWorldPoint(pointerInput);
         direction = mousepos - (Vector2)Gunpivot.position;
         float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-
+        float flipX = player.isFacingRight ? 1 : -1;
         // 4. สั่งให้ปืนหมุน
+
         Gunpivot.rotation = Quaternion.Euler(0, 0, angle);
-
-        // 5. พลิกปืนเมื่อเล็งไปข้างหลัง (ซ้าย)
-        bool isAimingLeft = (angle > 90 || angle < -90);
-
-        // 2. ตั้งค่าเริ่มต้นให้ปืนแกน Y เป็น 1 (ตั้งตรง)
-        float flipY = 1f;
-
-        // 3. ถ้าเมาส์อยู่ฝั่งซ้าย ให้พลิกปืนคว่ำลง (-1)
-        if (isAimingLeft)
+        if (angle > 90 || angle < -90)
         {
-            flipY = 1f;
+            Gunpivot.localScale = new Vector3(flipX, -1, 1);
         }
-
-        // 4. จุดสำคัญ: เช็คว่าตัวละคร (Player) หันซ้ายอยู่หรือไม่?
-        // ถ้าตัวละครหันซ้าย (แกน X ติดลบ) เราจะสลับค่า flipY อีกรอบ (ลบเจอลบเป็นบวก)
-        if (player.localScale.x < 0)
+        else
         {
-            flipY *= -1f;
+            Gunpivot.localScale = new Vector3(flipX, 1, 1);
         }
 
         // 5. นำค่าที่คำนวณเสร็จแล้วไปปรับขนาดปืน แค่บรรทัดเดียวจบ!
-        Gunpivot.localScale = new Vector3(1, flipY, 1);
+
 
     }
 }
