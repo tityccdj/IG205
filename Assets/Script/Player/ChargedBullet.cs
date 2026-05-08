@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Bullet : MonoBehaviour
+public class ChargedBullet : MonoBehaviour
 {
     [SerializeField] private float bulletspeed = 10f;
     Rigidbody2D rb;
@@ -15,13 +15,8 @@ public class Bullet : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
-    }
-    private void FixedUpdate()
-    {
         
     }
-
     public void Shoot()
     {
         rb.AddForce(transform.right * bulletspeed, ForceMode2D.Impulse);

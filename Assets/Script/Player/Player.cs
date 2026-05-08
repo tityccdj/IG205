@@ -10,13 +10,7 @@ public class Player : MonoBehaviour
     [SerializeField] private float CurrentMovespeed = 5.0f;
     [SerializeField] private GameObject Devmodbox;
 
-    [Header("Weapon")]
-    public GameObject Gun;
-    public GameObject Sword;
-    public GameObject BulletPrefab;
-    public GameObject BulletSpawn;
-    [SerializeField] private bool isGunActive = true;
-    [SerializeField] private bool isSwordActive = false;
+
 
     [Header("Movement")]
     [SerializeField] private bool DevMode;
@@ -31,7 +25,7 @@ public class Player : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        BulletSpawn = GameObject.Find("PlayerBulletSpawn");
+        
         isFacingRight = true;
         if (GameManager.Instance != null)
         {
@@ -42,11 +36,8 @@ public class Player : MonoBehaviour
         Devmodbox.SetActive(false);
         DevMode = false;
         rb = GetComponent<Rigidbody2D>();
-        isSwordActive = false;
-        isGunActive = true;
-        isFacingRight = true;
-        UpdateWeapon();
 
+        isFacingRight = true;
     }
 
     // Update is called once per frame
@@ -66,34 +57,6 @@ public class Player : MonoBehaviour
         UpdateMove(moveInput);
     }
 
-    #region Weapon
-    public void UpdateWeapon()
-    {
-        Gun.SetActive(isGunActive);
-        Sword.SetActive(isSwordActive);
-    }
-    public void OnSwitchWeapon(InputValue input)
-    {
-        isGunActive = !isGunActive;
-        isSwordActive = !isSwordActive;
-        UpdateWeapon();
-    }
-
-    public void OnAttack(InputValue input)
-    {
-        if (isGunActive)
-        {
-            Instantiate(BulletPrefab, BulletSpawn.transform.position, BulletSpawn.transform.rotation);
-        }
-        else if (isSwordActive)
-        {
-            // Implement sword attack logic here
-        }
-    }
-
-
-
-    #endregion
 
     #region Movement
     public void OnJump(InputValue input)

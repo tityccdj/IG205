@@ -11,8 +11,8 @@ GameObject:
   - component: {fileID: 8656913496003847089}
   - component: {fileID: 3552018962734796815}
   - component: {fileID: 5891131610116030794}
-  m_Layer: 0
-  m_Name: Bullet
+  m_Layer: 7
+  m_Name: MachineBullet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -49,7 +49,7 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDamping: 0
   m_AngularDamping: 0.05
-  m_GravityScale: 1
+  m_GravityScale: 0
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -73,6 +73,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 94bad51a55fdfcf418c539379d56dddb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  bulletspeed: 7
 --- !u!1 &4125894786002597440
 GameObject:
   m_ObjectHideFlags: 0
@@ -83,7 +84,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5116438278220599110}
   - component: {fileID: 2386037722071509759}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Bulletsprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
