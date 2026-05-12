@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8656913496003847089}
   - component: {fileID: 3552018962734796815}
-  - component: {fileID: 5891131610116030794}
+  - component: {fileID: 5820188204070895615}
   m_Layer: 7
   m_Name: ChragedBullet
   m_TagString: Untagged
@@ -61,7 +61,7 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!114 &5891131610116030794
+--- !u!114 &5820188204070895615
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -70,10 +70,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 3799386198297595190}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 94bad51a55fdfcf418c539379d56dddb, type: 3}
+  m_Script: {fileID: 11500000, guid: 3d7e96874a3c48c48a175492fe7535b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bulletspeed: 10
+  baseSpeed: 16
 --- !u!1 &4125894786002597440
 GameObject:
   m_ObjectHideFlags: 0

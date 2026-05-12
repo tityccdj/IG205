@@ -20,7 +20,19 @@ public class PlayerCombat : MonoBehaviour
     [SerializeField] private GameObject ChargedBulletPrefab;
     [SerializeField] private GameObject ChargedBulletSpawn;
     [SerializeField] private bool isCharging = false;
-    [SerializeField] private float chargedGunChargeTime = 1f;
+    [SerializeField] private float maxChargeTime = 1.2f;
+    [SerializeField] private float currentCharge = 0f;
+
+    [Header("Charge Bar Visuals")]
+    public GameObject chargeBarContainer; // กล่องเก็บหลอดชาร์จ (เพื่อสั่งเปิด/ปิดให้หายไปตอนไม่ได้ชาร์จ)
+    public Transform chargeBarFill; // ลาก ChargeBarFill มาใส่ช่องนี้
+    public float ChargePercent => currentCharge / maxChargeTime;
+    public float debugChargePercent =0f;
+    private float initialFillScaleY;
+
+
+    // เก็บค่าขนาด X เริ่มต้นของหลอดพลังตอนเต็ม (ปกติคือ 1)
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     private void Awake()
     {
@@ -30,6 +42,17 @@ public class PlayerCombat : MonoBehaviour
         isChargedGunActive = false;
         isMachneGunActive = true;
         UpdateWeapon();
+
+        if (chargeBarFill != null)
+        {
+            initialFillScaleY = chargeBarFill.localScale.y;
+        }
+
+        // ซ่อนหลอดชาร์จไว้ก่อนตอนเริ่มเกม
+        if (chargeBarContainer != null)
+        {
+            chargeBarContainer.SetActive(false);
+        }
     }
 
     // Update is called once per frame
@@ -37,6 +60,8 @@ public class PlayerCombat : MonoBehaviour
     {
         UpdateMachineGun();
         UpdateChargedGun();
+        debugChargePercent = ChargePercent;
+
     }
     public void UpdateWeapon()
     {
@@ -50,6 +75,11 @@ public class PlayerCombat : MonoBehaviour
         UpdateWeapon();
         isFiringMachineGun = false;
         isCharging = false;
+        currentCharge = 0f;
+            if (chargeBarContainer != null)
+            {
+                chargeBarContainer.SetActive(false);
+        }
     }
 
     public void OnAttack(InputValue input)
@@ -62,7 +92,15 @@ public class PlayerCombat : MonoBehaviour
         else if (isChargedGunActive)
         {
             isCharging = input.isPressed;
+            if (isCharging)            {
+                if (chargeBarContainer != null)
+                {
+                    chargeBarContainer.SetActive(true);
+                }
+            }
+            
         }
+
     }
     #region MachineGun
     public void UpdateMachineGun()
@@ -94,10 +132,16 @@ public class PlayerCombat : MonoBehaviour
         {
             return;
         }
-        if (isCharging)
+        GameObject chragedbullet = Instantiate(ChargedBulletPrefab, ChargedBulletSpawn.transform.position, ChargedBulletSpawn.transform.rotation);
+        ChargedBullet bulletScript = chragedbullet.GetComponent<ChargedBullet>();
+
+        if (bulletScript != null)
         {
-            Instantiate(ChargedBulletPrefab, ChargedBulletSpawn.transform.position, ChargedBulletSpawn.transform.rotation);
+            bulletScript.Shoot(ChargePercent);
+            Debug.Log($"Fired Charged Gun with Charge Percent: {ChargePercent * 100f}%");
         }
+
+
     }
 
     public void UpdateChargedGun()
@@ -106,13 +150,42 @@ public class PlayerCombat : MonoBehaviour
             return;
         if (isCharging)
         {
-            chargedGunChargeTime -= Time.deltaTime;
-            if (chargedGunChargeTime <= 0f)
+            currentCharge += Time.deltaTime;
+            if (currentCharge >= maxChargeTime)
             {
                 FireChargedGun();
-                chargedGunChargeTime = 1.0f; // Reset charge time for next shot
+                currentCharge = 0f; // Reset charge for next shot
             }
+            UpdateChargeBarVisual();
         }
+        else
+        {
+
+            if (chargeBarContainer != null)
+            {
+                chargeBarContainer.SetActive(false);    
+            }
+            if (currentCharge > 0.4f) // เช็คว่ามีการชาร์จมาบ้างนิดหน่อยแล้วถึงยิง
+            {
+                FireChargedGun();
+                
+            }
+            currentCharge = 0f; // จากนั้นค่อยรีเซ็ตการชาร์จเป็น 0
+            UpdateChargeBarVisual();
+        }
+    }
+
+    private void UpdateChargeBarVisual()
+    {
+        if (chargeBarFill == null) return;
+        currentCharge = Mathf.Clamp(currentCharge, 0f, maxChargeTime);
+        float chargePercent = currentCharge / maxChargeTime;
+        // ปรับขนาดความยาว (Scale X) ของหลอด ตามเปอร์เซ็นต์
+        chargeBarFill.localScale = new Vector3(
+            chargeBarFill.localScale.x,
+            initialFillScaleY * chargePercent,
+            chargeBarFill.localScale.z
+        );
     }
     #endregion
 }

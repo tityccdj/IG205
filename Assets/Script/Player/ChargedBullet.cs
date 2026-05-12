@@ -2,13 +2,16 @@ using UnityEngine;
 
 public class ChargedBullet : MonoBehaviour
 {
-    [SerializeField] private float bulletspeed = 10f;
+    [SerializeField] private float baseSpeed = 10;
     Rigidbody2D rb;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
-        Shoot();
+    }
+    void Start()
+    {
+        
         Destroy(gameObject, 5f);
     }
 
@@ -17,8 +20,9 @@ public class ChargedBullet : MonoBehaviour
     {
         
     }
-    public void Shoot()
+    public void Shoot(float chargePercent)
     {
-        rb.AddForce(transform.right * bulletspeed, ForceMode2D.Impulse);
+        float bulletSpeed = baseSpeed * chargePercent;
+        rb.AddForce(transform.right * bulletSpeed, ForceMode2D.Impulse);
     }
 }
