@@ -26,8 +26,13 @@ public class PlayerAim : MonoBehaviour
     }
     private void AimTracking()
     {
-        Vector2 mousepos = mainCam.ScreenToWorldPoint(pointerInput);
+        float zDistance = Mathf.Abs(mainCam.transform.position.z - transform.position.z);
+        Vector3 screenPosWithZ = new Vector3(pointerInput.x, pointerInput.y, zDistance);
+
+        Vector2 mousepos = mainCam.ScreenToWorldPoint(screenPosWithZ);
         direction = mousepos - (Vector2)transform.position;
+
+
         float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
         float flipX = player.isFacingRight ? 1 : -1;
         // 4. สั่งให้ปืนหมุน

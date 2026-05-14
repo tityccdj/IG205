@@ -7,7 +7,8 @@ public class Player : MonoBehaviour
 {
     [Header("Player Info")]
     [SerializeField] private int CurrentHealth = 3;
-    [SerializeField] private float CurrentMovespeed = 5.0f;
+    [SerializeField] private float BaseMovespeed = 5.0f;
+     private float CurrentMovespeed = 5.0f;
     [SerializeField] private GameObject Devmodbox;
 
 
@@ -16,23 +17,26 @@ public class Player : MonoBehaviour
     [SerializeField] private bool DevMode;
     [SerializeField] public bool isFacingRight { get; private set; }
     [SerializeField] private Vector2 moveInput;
-    [SerializeField] private float jumpForce=5.0f;
+    [SerializeField] private float BasejumpForce = 5.0f;
+    private float jumpForce=5.0f;
     [SerializeField] private bool isGrounded;
     private Rigidbody2D rb;
+    float fall = 2.5f;
 
-  
+
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        
+        jumpForce = BasejumpForce;
         isFacingRight = true;
         if (GameManager.Instance != null)
         {
             CurrentHealth = GameManager.Instance.MaxHealth;
-            CurrentMovespeed = GameManager.Instance.moveSpeed;
+            BaseMovespeed = GameManager.Instance.moveSpeed;
         }
-        Devmodbox = GameObject.Find("DevModeBox");
+        CurrentMovespeed = BaseMovespeed;
+        Devmodbox = GameObject.Find("DevMode");
         Devmodbox.SetActive(false);
         DevMode = false;
         rb = GetComponent<Rigidbody2D>();
@@ -55,8 +59,20 @@ public class Player : MonoBehaviour
     private void FixedUpdate()
     {
         UpdateMove(moveInput);
+        if (rb.linearVelocity.y < 0)
+        {
+            // ให้เพิ่มแรงโน้มถ่วงเข้าไปเพิ่มอีก เพื่อให้ตกพื้นเร็วขึ้น
+            rb.linearVelocity += Vector2.up * Physics2D.gravity.y * (fall - 1) * Time.deltaTime;
+        }
     }
-
+    public void TakeDamage(int damage)
+    {
+        CurrentHealth -= damage;
+        if (CurrentHealth <= 0)
+        {
+            
+        }
+    }
 
     #region Movement
     public void OnJump(InputValue input)
@@ -91,21 +107,13 @@ public class Player : MonoBehaviour
 
     public void UpdateDevMode()
     {
-        if (DevMode)
-        {
-            jumpForce = 10;
-            CurrentMovespeed = 10; // temp
-        }
-        else
-        {
-            jumpForce = 5;
-            CurrentMovespeed = 5;
-        }
+        jumpForce = DevMode ? BasejumpForce*2 : BasejumpForce;
+        CurrentMovespeed = DevMode ? BaseMovespeed*2 : BaseMovespeed;
     }
 
     #endregion
 
-    #region Collision
+    #region Collision&Trigger
     void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Ground"))
@@ -118,6 +126,14 @@ public class Player : MonoBehaviour
         if (collision.gameObject.CompareTag("Ground"))
         {
             isGrounded = false;
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Enemy"))
+        {
+            TakeDamage(1);
         }
     }
     #endregion
