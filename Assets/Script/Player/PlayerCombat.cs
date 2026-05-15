@@ -29,6 +29,9 @@ public class PlayerCombat : MonoBehaviour
     public float ChargePercent => currentCharge / maxChargeTime;
     public float debugChargePercent =0f;
     private float initialFillScaleY;
+    [Header("Misc")]
+    public GameObject Weapon;
+    [SerializeField] public bool isAttacking = false;
 
 
     // เก็บค่าขนาด X เริ่มต้นของหลอดพลังตอนเต็ม (ปกติคือ 1)
@@ -60,6 +63,7 @@ public class PlayerCombat : MonoBehaviour
     {
         UpdateMachineGun();
         UpdateChargedGun();
+        UpdateShowWeapon();
         debugChargePercent = ChargePercent;
 
     }
@@ -84,7 +88,7 @@ public class PlayerCombat : MonoBehaviour
 
     public void OnAttack(InputValue input)
     {
-
+        isAttacking = input.isPressed;
         if (isMachneGunActive)
         {
             isFiringMachineGun = input.isPressed;
@@ -100,6 +104,7 @@ public class PlayerCombat : MonoBehaviour
             }
             
         }
+        
 
     }
     #region MachineGun
@@ -187,5 +192,19 @@ public class PlayerCombat : MonoBehaviour
             chargeBarFill.localScale.z
         );
     }
+
+    public bool IschargedGunActive()
+    {
+        return isChargedGunActive;
+    }
     #endregion
+
+    #region Misc
+    public void UpdateShowWeapon()
+        {
+            if (Weapon == null) return;
+            Weapon.SetActive(isAttacking);
+        }
+    #endregion
+
 }

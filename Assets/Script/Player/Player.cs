@@ -70,7 +70,7 @@ public class Player : MonoBehaviour
         CurrentHealth -= damage;
         if (CurrentHealth <= 0)
         {
-            
+            CurrentHealth = 0;
         }
     }
 

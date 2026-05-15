@@ -12,7 +12,7 @@ public class PlayerAim : MonoBehaviour
     void Start()
     {
         mainCam = Camera.main;
-        player = GameObject.Find("Player").GetComponent<Player>();
+        player = GameObject.FindWithTag("Player").GetComponent<Player>();
     }
 
     // Update is called once per frame
