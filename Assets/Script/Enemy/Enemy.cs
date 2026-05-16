@@ -1,4 +1,5 @@
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Enemy : MonoBehaviour
@@ -19,6 +20,7 @@ public class Enemy : MonoBehaviour
     [Header("Attack")]
     [SerializeField] private bool canAttack = true;
     [SerializeField] private bool isAttacking;
+    [SerializeField] private bool isCooldown;
     public GameObject attackBox;
     private EnemySight sight;
 
@@ -94,26 +96,32 @@ public class Enemy : MonoBehaviour
 
     #region Attack
 
+    public void FinishAttack()
+    {
+        canMove = true;
+        isAttacking = false;
+        attackBox.SetActive(false);
+        StartCoroutine(AttackCooldownRoutine());
+    }
     IEnumerator Attack()
     {
         canMove = false;
         isAttacking = true;
         yield return new WaitForSeconds(0.5f);
         attackBox.SetActive(true); 
-        StartCoroutine(ResetAttack());
+
     }
 
-    IEnumerator ResetAttack()
+    IEnumerator AttackCooldownRoutine()
     {
-        yield return new WaitForSeconds(1.0f);
-        attackBox.SetActive(false);
-        canMove = true;
-        isAttacking = false;
+        isCooldown = true; // ≈ÁÕ§ÀÈ“¡‚®¡µ’
+        yield return new WaitForSeconds(1); // √Õ‡«≈“µ“¡∑’Ëµ—Èß‰«È
+        isCooldown = false; // ª≈¥≈ÁÕ§! ‚®¡µ’√Õ∫µËÕ‰ª‰¥È
     }
     public void UpdateAttack()
     {
         canAttack = sight.IsPlayerInSight();
-        if (canAttack && !isAttacking)
+        if (canAttack && !isAttacking && !isCooldown)
         {
             StartCoroutine(Attack());
         }

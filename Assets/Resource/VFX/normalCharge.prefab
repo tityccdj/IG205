@@ -4903,6 +4903,7 @@ GameObject:
   - component: {fileID: 8343711528994816061}
   - component: {fileID: 6480386997915088754}
   - component: {fileID: -4497314758747190567}
+  - component: {fileID: 2131344607312108287}
   m_Layer: 0
   m_Name: normalCharge
   m_TagString: Untagged
@@ -5497,7 +5498,7 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     randomizeRotationDirection: 0
-    gravitySource: 0
+    gravitySource: 1
     maxNumParticles: 1000
     customEmitterVelocity: {x: 0, y: 0, z: 0}
     size3D: 1
@@ -9806,6 +9807,18 @@ SortingGroup:
   m_SortingLayer: 0
   m_SortingOrder: 81
   m_SortAtRoot: 0
+--- !u!114 &2131344607312108287
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4367466542359643468}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8325fd4ef148ccd4299145e78b53448a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8947830708667523983
 GameObject:
   m_ObjectHideFlags: 0

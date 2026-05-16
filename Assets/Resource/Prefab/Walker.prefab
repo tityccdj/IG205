@@ -311,6 +311,7 @@ GameObject:
   - component: {fileID: 4102503031621672485}
   - component: {fileID: 8136735272693115387}
   - component: {fileID: 4116886643435478654}
+  - component: {fileID: 5213923035034617846}
   m_Layer: 8
   m_Name: Animation
   m_TagString: Untagged
@@ -327,7 +328,7 @@ Transform:
   m_GameObject: {fileID: 6268520698180339586}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: -0.32, z: 0}
   m_LocalScale: {x: -0.25, y: 0.25, z: 0.25}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -410,3 +411,15 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &5213923035034617846
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6268520698180339586}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aca0a13034cf5784ba0882ba2f0600bf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

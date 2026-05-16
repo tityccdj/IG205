@@ -1,4 +1,5 @@
 
+using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -9,6 +10,8 @@ public class Player : MonoBehaviour
     [SerializeField] private int CurrentHealth = 3;
     [SerializeField] private float BaseMovespeed = 5.0f;
      private float CurrentMovespeed = 5.0f;
+    public bool isDead;
+    public GameObject deadbox;
     [SerializeField] private GameObject Devmodbox;
 
 
@@ -21,25 +24,38 @@ public class Player : MonoBehaviour
     private float jumpForce=5.0f;
     [SerializeField] private bool isGrounded;
     private Rigidbody2D rb;
+    private PolygonCollider2D playerCollider;
+    private bool isFalling;
     float fall = 2.5f;
+    [Header("Injure")]
+    [SerializeField] private float invulnerabilityDuration = 1.0f;
+    [SerializeField] private bool isInvulnerable;
+    [SerializeField] SpriteRenderer spriteRenderer;
+    private Color originalColor;
 
-
-
+    private void Awake()
+    {
+        deadbox = GetComponentInChildren<Transform>().Find("DeadBox").gameObject;
+        rb = GetComponent<Rigidbody2D>();
+        spriteRenderer = GetComponentInChildren<SpriteRenderer>();
+        playerCollider = GetComponent<PolygonCollider2D>();
+    }
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        jumpForce = BasejumpForce;
-        isFacingRight = true;
+        deadbox.SetActive(false);
         if (GameManager.Instance != null)
         {
             CurrentHealth = GameManager.Instance.MaxHealth;
             BaseMovespeed = GameManager.Instance.moveSpeed;
         }
+        jumpForce = BasejumpForce;
+        isFacingRight = true;
         CurrentMovespeed = BaseMovespeed;
         Devmodbox = GameObject.Find("DevMode");
         Devmodbox.SetActive(false);
         DevMode = false;
-        rb = GetComponent<Rigidbody2D>();
+        originalColor = spriteRenderer.color;
 
         isFacingRight = true;
     }
@@ -58,26 +74,20 @@ public class Player : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if(isDead) return;
         UpdateMove(moveInput);
         if (rb.linearVelocity.y < 0)
         {
-            // ให้เพิ่มแรงโน้มถ่วงเข้าไปเพิ่มอีก เพื่อให้ตกพื้นเร็วขึ้น
+            isFalling = true;
             rb.linearVelocity += Vector2.up * Physics2D.gravity.y * (fall - 1) * Time.deltaTime;
         }
     }
-    public void TakeDamage(int damage)
-    {
-        CurrentHealth -= damage;
-        if (CurrentHealth <= 0)
-        {
-            CurrentHealth = 0;
-        }
-    }
+    
 
     #region Movement
     public void OnJump(InputValue input)
     {
-        if (isGrounded)
+        if (isGrounded&& !isDead)
         {
             rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
         }
@@ -110,6 +120,14 @@ public class Player : MonoBehaviour
         jumpForce = DevMode ? BasejumpForce*2 : BasejumpForce;
         CurrentMovespeed = DevMode ? BaseMovespeed*2 : BaseMovespeed;
     }
+    public float GetFloatMove()
+    {
+        return rb.linearVelocity.x;
+    }
+    public bool Isfalling()
+    {
+        return isFalling;
+    }
 
     #endregion
 
@@ -119,6 +137,7 @@ public class Player : MonoBehaviour
         if (collision.gameObject.CompareTag("Ground"))
         {
             isGrounded = true;
+            isFalling = false;
         }
     }
     private void OnCollisionExit2D(Collision2D collision)
@@ -133,8 +152,68 @@ public class Player : MonoBehaviour
     {
         if (collision.CompareTag("Enemy"))
         {
-            TakeDamage(1);
+            if (!isInvulnerable)
+
+            {
+                TakeDamage(1);
+                StartCoroutine(Invulerable(invulnerabilityDuration));
+                TriggerHitStop(0.1f); // เรียกใช้ Hit Stop เมื่อโดนโจมตี
+            }
         }
+    }
+   
+    #endregion
+
+    #region GetHit
+    public void TakeDamage(int damage)
+    {
+        CurrentHealth -= damage;
+        if (CurrentHealth <= 0)
+        {
+            CurrentHealth = 0;
+            Die();
+        }
+    }
+
+    IEnumerator Invulerable(float duration)
+    {
+        isInvulnerable = true;
+        StartCoroutine(FeedBackHit());
+        yield return new WaitForSeconds(duration);
+        isInvulnerable = false;
+    }
+
+    IEnumerator FeedBackHit()
+    {         
+        while (isInvulnerable)
+        {
+            spriteRenderer.color = Color.red; // เปลี่ยนสีเป็นแดง
+            yield return new WaitForSeconds(0.1f); // รอ 0.1 วินาที
+            spriteRenderer.color = originalColor; // คืนสีเดิม
+            yield return new WaitForSeconds(0.1f); // รอ 0.1 วินาที
+        }
+        spriteRenderer.color = originalColor; // คืนสีเดิม
+    }
+    public void TriggerHitStop(float duration)
+    {
+        StartCoroutine(HitStopRoutine(duration));
+    }
+
+    IEnumerator HitStopRoutine(float duration)
+    {
+        Time.timeScale = 0f; // หยุดเวลาทั้งเกม (ตัวละครค้างกลางอากาศ)
+        yield return new WaitForSecondsRealtime(duration); // ใช้ Realtime เพราะ timeScale เป็น 0 อยู่
+        Time.timeScale = 1f; // คืนค่าเวลาให้เดินตามปกติ
+    }
+
+
+    public void Die()
+    {
+        rb.linearVelocity = Vector2.zero; 
+        isDead = true;
+        playerCollider.enabled = false; // ปิดการชนเพื่อไม่ให้เกิดปัญหาหลังจากตาย
+        deadbox.SetActive(true);
+        // เพิ่มการเล่นอนิเมชันตายที่นี่ (ถ้ามี)
     }
     #endregion
 

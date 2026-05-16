@@ -32,6 +32,7 @@ public class PlayerCombat : MonoBehaviour
     [Header("Misc")]
     public GameObject Weapon;
     [SerializeField] public bool isAttacking = false;
+    Player player;
 
 
     // เก็บค่าขนาด X เริ่มต้นของหลอดพลังตอนเต็ม (ปกติคือ 1)
@@ -45,7 +46,7 @@ public class PlayerCombat : MonoBehaviour
         isChargedGunActive = false;
         isMachneGunActive = true;
         UpdateWeapon();
-
+        player = GetComponent<Player>();
         if (chargeBarFill != null)
         {
             initialFillScaleY = chargeBarFill.localScale.y;
@@ -61,6 +62,7 @@ public class PlayerCombat : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(player.isDead) return;
         UpdateMachineGun();
         UpdateChargedGun();
         UpdateShowWeapon();

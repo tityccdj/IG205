@@ -33,10 +33,12 @@ public class Bullet : MonoBehaviour
     {
         if (collision.CompareTag("Enemy"))
         {
-            if(collision.GetComponent<Enemy>() != null)
+            if (collision.GetComponent<Enemy>() != null)
+            {
                 Instantiate(hitParticle, transform.position, Quaternion.identity);
-            collision.GetComponent<Enemy>().TakeDamage(bulletDamage);
-            collision.GetComponent<Enemy>().Knockback(0.2f,2f);
+                collision.GetComponent<Enemy>().TakeDamage(bulletDamage);
+                collision.GetComponent<Enemy>().Knockback(0.2f, 2f);
+            }
             Destroy(gameObject);
         }
         

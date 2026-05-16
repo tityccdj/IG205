@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 1623298396792479162}
   - component: {fileID: 4652279233575634131}
   - component: {fileID: -2964924167496260350}
+  - component: {fileID: 5057044908016043386}
   m_Layer: 0
   m_Name: Machinegun
   m_TagString: Untagged
@@ -606,7 +607,7 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     randomizeRotationDirection: 0
-    gravitySource: 0
+    gravitySource: 1
     maxNumParticles: 1000
     customEmitterVelocity: {x: 0, y: 0, z: 0}
     size3D: 0
@@ -4915,6 +4916,18 @@ SortingGroup:
   m_SortingLayer: 0
   m_SortingOrder: 81
   m_SortAtRoot: 0
+--- !u!114 &5057044908016043386
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 271054424957760564}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8325fd4ef148ccd4299145e78b53448a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3877762152598825534
 GameObject:
   m_ObjectHideFlags: 0
