@@ -4,6 +4,8 @@ public class ChargedBullet : MonoBehaviour
 {
     [SerializeField] private float baseSpeed = 10;
     [SerializeField] private float basedamage = 40f;
+    public GameObject hitParticle;
+    public GameObject FullhitParticle;
     float damage;
     Rigidbody2D rb;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -33,7 +35,22 @@ public class ChargedBullet : MonoBehaviour
     {
         if (collision.CompareTag("Enemy"))
         {
-            collision.GetComponent<Enemy>().TakeDamage(damage);
+            if (collision.GetComponent<Enemy>() != null)
+            {
+                if (damage >= basedamage * 1.5f)
+                {
+                    Instantiate(FullhitParticle, transform.position, Quaternion.identity);
+                    collision.GetComponent<Enemy>().Knockback(0.7f,10f);
+
+                }
+                else
+                {
+                    Instantiate(hitParticle, transform.position, Quaternion.identity);
+                    collision.GetComponent<Enemy>().Knockback(0.4f,5f);
+                }
+                collision.GetComponent<Enemy>().TakeDamage(damage);
+                
+            }
             Destroy(gameObject);
         }
         

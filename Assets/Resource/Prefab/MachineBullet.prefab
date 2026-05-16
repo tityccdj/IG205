@@ -76,6 +76,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bulletspeed: 14
   bulletDamage: 10
+  hitParticle: {fileID: 271054424957760564, guid: 1468eeb0963ddad41909c04ad8af0aee, type: 3}
 --- !u!58 &2751412410216473803
 CircleCollider2D:
   m_ObjectHideFlags: 0
