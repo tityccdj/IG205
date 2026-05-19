@@ -6,6 +6,7 @@ public class ChargedBullet : MonoBehaviour
     [SerializeField] private float basedamage = 40f;
     public GameObject hitParticle;
     public GameObject FullhitParticle;
+    public float randomRotationRange = 360f;
     float damage;
     Rigidbody2D rb;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -15,7 +16,8 @@ public class ChargedBullet : MonoBehaviour
     }
     void Start()
     {
-        
+        float randomRotation = Random.Range(-randomRotationRange, randomRotationRange);
+        rb.rotation += randomRotation;
         Destroy(gameObject, 5f);
     }
 
@@ -29,6 +31,10 @@ public class ChargedBullet : MonoBehaviour
         float bulletSpeed = baseSpeed * chargePercent;
         damage = basedamage * chargePercent;
         damage = chargePercent>=0.95 ? damage*1.5f : damage;
+        if(chargePercent >= 0.95f)
+        {
+            gameObject.transform.localScale = new Vector3(1.5f, 1.5f, 1);
+        }
         rb.AddForce(transform.right * bulletSpeed, ForceMode2D.Impulse);
     }
     private void OnTriggerEnter2D(Collider2D collision)

@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Trash : MonoBehaviour
 {
@@ -13,6 +14,10 @@ public class Trash : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (SceneManager.GetActiveScene().name != "Gameplay")
+        {
+            return;
+        }
         UpdateLife();
     }
     public void UpdateLife()
