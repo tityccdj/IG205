@@ -8,6 +8,7 @@ public class Enemy : MonoBehaviour
     private float CurrentHealth = 50;
     private bool isAlive = true;
     Animator anim;
+    EnemyDrop drop;
 
     [Header("Movement")]
     [SerializeField] bool canMove = true;
@@ -43,6 +44,7 @@ public class Enemy : MonoBehaviour
 
     void Start()
     {
+        drop = GetComponent<EnemyDrop>();
         isAttacking = false;
         MaxHealth = 50 + (GameManager.Instance.CurrentLevel * 1.5f);
         CurrentHealth = MaxHealth;
@@ -136,7 +138,6 @@ public class Enemy : MonoBehaviour
     }
     public void TakeDamage(float damage)
     {
-        Debug.Log($"Enemy took {damage} damage");
         StartCoroutine(Feedback());
         CurrentHealth -= damage;
         if (CurrentHealth <= 0)
@@ -153,7 +154,17 @@ public class Enemy : MonoBehaviour
         isAttacking = false;
         isAlive = false;
         anim.SetTrigger("Dead");
+        DropItem();
+
         StartCoroutine(DeadCd());
+    }
+
+    private void DropItem()
+    {
+        if (drop != null)
+        {
+            drop.DropItem();
+        }
     }
     IEnumerator DeadMove(float duration)
         {

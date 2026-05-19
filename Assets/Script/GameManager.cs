@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
+    
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     public static GameManager Instance;
     private TextMeshProUGUI Spawnbutton_txt;
@@ -27,8 +28,7 @@ public class GameManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
-        Spawnbutton_txt = GameObject.Find("SpawnToggleButton").GetComponentInChildren<TextMeshProUGUI>();
-        Spawnbutton_txt.text = SpawnEnemies ? "Stop Spawning" : "Start Spawning";
+        
     }
     void Start()
     {
@@ -40,9 +40,5 @@ public class GameManager : MonoBehaviour
     {
         
     }
-    public void SpawnToggle()
-    {
-        SpawnEnemies = !SpawnEnemies;
-        Spawnbutton_txt.text = SpawnEnemies ? "Stop Spawning" : "Start Spawning";
-    }
+
 }

@@ -20,7 +20,7 @@ TagManager:
   - Enemy
   - Wall
   - Enemy_Hitbox
-  - 
+  - OnGroundOnly
   - 
   - 
   - 

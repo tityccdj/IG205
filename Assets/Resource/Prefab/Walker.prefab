@@ -182,6 +182,7 @@ GameObject:
   - component: {fileID: 4334152548052084005}
   - component: {fileID: 2366101928571144656}
   - component: {fileID: 6377854297731422164}
+  - component: {fileID: 6132591954077009851}
   m_Layer: 8
   m_Name: Walker
   m_TagString: Enemy
@@ -251,6 +252,7 @@ MonoBehaviour:
   BoxCollider2D: {fileID: 0}
   canAttack: 1
   isAttacking: 0
+  isCooldown: 0
   attackBox: {fileID: 3221066597103830973}
   knockbackForce: 20
   isKnockedback: 0
@@ -300,6 +302,28 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 2.6869144, y: 1.4839506}
   m_EdgeRadius: 0
+--- !u!114 &6132591954077009851
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5237756540838402466}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2367ba73bdc5b58479bca2a685c9ba59, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemsToDrop:
+  - {fileID: 2673675723589455418, guid: 47c0c4bd64a7ef149bcf9ee6642a321a, type: 3}
+  - {fileID: 5184921688863157069, guid: ee647702d48698742bcdf97d3a0773de, type: 3}
+  - {fileID: 8371279850481743635, guid: 4999e47a5c06b0641b4d1e502d883d26, type: 3}
+  - {fileID: 3472137622987796243, guid: 8b727672d995cd24fbeab1c0a00a6ae3, type: 3}
+  - {fileID: 196188948943907577, guid: a23b3860eda447949897159141114cef, type: 3}
+  - {fileID: 6958675484292996824, guid: 3436992ae58d2d840b5cb07fbea73a61, type: 3}
+  - {fileID: 2710937993581807399, guid: 5a9dd34ed786a634d8214c4b5a136475, type: 3}
+  - {fileID: 2073810407131942053, guid: 165f21b447556cd40a1d201208b8019b, type: 3}
+  dropOffset: 0.5
 --- !u!1 &6268520698180339586
 GameObject:
   m_ObjectHideFlags: 0
