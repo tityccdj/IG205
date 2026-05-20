@@ -64,4 +64,21 @@ public class InventoryManager : MonoBehaviour
             AddItem(ItemType.Glass, 2); // เก็บแก้วเพิ่ม 2 ชิ้น
         }
     }
+    public void RemoveItem(ItemType type, int amount)
+    {
+        int index = (int)type; // แปลงชื่อไอเทมเป็นตัวเลข index เหมือนเดิม
+
+        // เช็คก่อนว่ามีของให้หักไหม
+        if (inventoryCounts[index] >= amount)
+        {
+            inventoryCounts[index] -= amount;
+            Debug.Log($"ทิ้ง {type} ไป {amount} ชิ้น! ตอนนี้เหลือ {inventoryCounts[index]} ชิ้น");
+        }
+        else
+        {
+            // ถ้าของมีน้อยกว่าจำนวนที่จะหัก ก็ปรับให้เหลือ 0 ไปเลย ป้องกันบัคของติดลบ
+            inventoryCounts[index] = 0;
+            Debug.LogWarning($"พยายามหัก {type} แต่ของมีไม่พอ! เซ็ตค่าให้เหลือ 0");
+        }
+    }
 }

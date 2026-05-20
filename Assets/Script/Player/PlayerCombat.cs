@@ -1,4 +1,4 @@
-using Unity.VisualScripting;
+﻿using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -24,18 +24,24 @@ public class PlayerCombat : MonoBehaviour
     [SerializeField] private float currentCharge = 0f;
 
     [Header("Charge Bar Visuals")]
-    public GameObject chargeBarContainer; // ���ͧ����ʹ���� (��������Դ/�Դ������仵͹��������)
-    public Transform chargeBarFill; // �ҡ ChargeBarFill ������ͧ���
+    public GameObject chargeBarContainer; // กล่องเก็บหลอดชาร์จ (เพื่อสั่งเปิด/ปิดให้หายไปตอนไม่ได้ชาร์จ)
+    public SpriteRenderer chargeBarFill; // ลาก ChargeB
+    public Transform chargeMaskTransform;                                     // arFill มาใส่ช่องนี้
     public float ChargePercent => currentCharge / maxChargeTime;
     public float debugChargePercent =0f;
     private float initialFillScaleY;
+    [Header("Mask Positions")]
+    // 🚨 เอาค่าพิกัดที่คุณจดไว้ในสเต็ปที่ 2 มาใส่ตรงนี้ในหน้า Inspector ครับ
+    public Vector3 maskEmptyPos; // พิกัดตอนหลอดว่าง
+    public Vector3 maskFullPos;  // พิกัดตอนหลอดเต็ม
+
     [Header("Misc")]
     public GameObject Weapon;
     [SerializeField] public bool isAttacking = false;
     Player player;
 
 
-    // �纤�Ң�Ҵ X ������鹢ͧ��ʹ��ѧ�͹��� (���Ԥ�� 1)
+    // เก็บค่าขนาด X เริ่มต้นของหลอดพลังตอนเต็ม (ปกติคือ 1)
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     private void Awake()
@@ -49,10 +55,10 @@ public class PlayerCombat : MonoBehaviour
         player = GetComponent<Player>();
         if (chargeBarFill != null)
         {
-            initialFillScaleY = chargeBarFill.localScale.y;
+            initialFillScaleY = chargeBarFill.size.y;
         }
 
-        // ��͹��ʹ��������͹�͹�������
+        // ซ่อนหลอดชาร์จไว้ก่อนตอนเริ่มเกม
         if (chargeBarContainer != null)
         {
             chargeBarContainer.SetActive(false);
@@ -172,28 +178,27 @@ public class PlayerCombat : MonoBehaviour
             {
                 chargeBarContainer.SetActive(false);    
             }
-            if (currentCharge > 0.4f) // ������ա�ê����Һ�ҧ�Դ˹������Ƕ֧�ԧ
+            if (currentCharge > 0.4f) // เช็คว่ามีการชาร์จมาบ้างนิดหน่อยแล้วถึงยิง
             {
                 FireChargedGun();
                 
             }
-            currentCharge = 0f; // �ҡ��鹤������絡�ê����� 0
+            currentCharge = 0f; // จากนั้นค่อยรีเซ็ตการชาร์จเป็น 0
             UpdateChargeBarVisual();
         }
     }
 
     private void UpdateChargeBarVisual()
     {
-        if (chargeBarFill == null) return;
+        if (chargeBarFill == null||player.isDead) return;
+
         currentCharge = Mathf.Clamp(currentCharge, 0f, maxChargeTime);
         float chargePercent = currentCharge / maxChargeTime;
-        // ��Ѻ��Ҵ������� (Scale X) �ͧ��ʹ ��������繵�
-        chargeBarFill.localScale = new Vector3(
-            chargeBarFill.localScale.x,
-            initialFillScaleY * chargePercent,
-            chargeBarFill.localScale.z
-        );
-    }
+
+        chargeMaskTransform.localPosition = Vector3.Lerp(maskEmptyPos, maskFullPos, chargePercent);
+    
+
+}
 
     public bool IschargedGunActive()
     {

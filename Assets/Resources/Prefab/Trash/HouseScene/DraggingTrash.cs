@@ -49,7 +49,9 @@ public class DraggingTrash : MonoBehaviour
             if (currentBin.IsCorrectTrash(itemType))
             {
                 GameManager.Instance.GoodMoney++;
+                UpdateHouseMoneyUI();
                 Instantiate(RightEffect, transform.position, Quaternion.identity);
+                InventoryManager.Instance.RemoveItem(itemType, 1);
                 Debug.Log($"Goodmoney: {GameManager.Instance.GoodMoney}");
                 // หักของออกจาก Inventory ตรงนี้ได้ด้วยถ้าต้องการ
                 Destroy(gameObject);
@@ -58,8 +60,9 @@ public class DraggingTrash : MonoBehaviour
             else
             {
                 GameManager.Instance.FailedMoney++;
-                
+                UpdateHouseMoneyUI();
                 Instantiate(WrongEffect, transform.position, Quaternion.identity);
+                InventoryManager.Instance.RemoveItem(itemType, 1);
                 Debug.Log($"Failedmoney: {GameManager.Instance.FailedMoney}");
                 Destroy(gameObject);
             }
@@ -118,6 +121,17 @@ public class DraggingTrash : MonoBehaviour
         if (bin != null && currentBin == bin)
         {
             currentBin = null;
+        }
+    }
+    private void UpdateHouseMoneyUI()
+    {
+        // ไปตามหา HouseManager ที่เปิดทำงานอยู่ในฉากบ้าน
+        HouseManager houseManager = FindAnyObjectByType<HouseManager>();
+
+        if (houseManager != null)
+        {
+            // ถ้าเจอ ให้สั่งอัปเดตตัวอักษร Text บนจอทันที
+            houseManager.Updatemoney();
         }
     }
 }

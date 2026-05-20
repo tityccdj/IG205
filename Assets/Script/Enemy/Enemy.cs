@@ -46,7 +46,7 @@ public class Enemy : MonoBehaviour
     {
         drop = GetComponent<EnemyDrop>();
         isAttacking = false;
-        MaxHealth = 50 + (GameManager.Instance.CurrentLevel * 1.5f);
+        MaxHealth = 30 + (GameManager.Instance.CurrentLevel * 15f);
         CurrentHealth = MaxHealth;
         player = GameObject.FindGameObjectWithTag("Player").transform;
     }

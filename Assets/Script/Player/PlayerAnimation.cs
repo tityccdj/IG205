@@ -37,6 +37,7 @@ public class PlayerAnimation : MonoBehaviour
         if (player.isDead)
         {
             anim.SetTrigger("isDead");
+            anim.SetBool("isAttacking", false);
         }
     }
 }

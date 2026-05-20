@@ -12,12 +12,12 @@ public class Player : MonoBehaviour
      private float CurrentMovespeed = 5.0f;
     public bool isDead;
     public GameObject deadbox;
-    [SerializeField] private GameObject Devmodbox;
 
+    public HealthUI health_ui;
 
 
     [Header("Movement")]
-    [SerializeField] private bool DevMode;
+
     [SerializeField] public bool isFacingRight { get; private set; }
     [SerializeField] private Vector2 moveInput;
     [SerializeField] private float BasejumpForce = 5.0f;
@@ -49,12 +49,12 @@ public class Player : MonoBehaviour
             CurrentHealth = GameManager.Instance.MaxHealth;
             BaseMovespeed = GameManager.Instance.moveSpeed;
         }
+        if (health_ui != null) health_ui.SetupMaxHealth(CurrentHealth);
         jumpForce = BasejumpForce;
         isFacingRight = true;
         CurrentMovespeed = BaseMovespeed;
-        Devmodbox = GameObject.Find("DevMode");
-        Devmodbox.SetActive(false);
-        DevMode = false;
+
+
         originalColor = spriteRenderer.color;
 
         isFacingRight = true;
@@ -63,12 +63,7 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.V))
-        {
-            DevMode = !DevMode;
-            Devmodbox.SetActive(DevMode);
-            UpdateDevMode();
-        }
+
 
     }
 
@@ -115,11 +110,7 @@ public class Player : MonoBehaviour
         isFacingRight = !isFacingRight;
     }
 
-    public void UpdateDevMode()
-    {
-        jumpForce = DevMode ? BasejumpForce*2 : BasejumpForce;
-        CurrentMovespeed = DevMode ? BaseMovespeed*2 : BaseMovespeed;
-    }
+
     public float GetFloatMove()
     {
         return rb.linearVelocity.x;
@@ -168,6 +159,8 @@ public class Player : MonoBehaviour
     public void TakeDamage(int damage)
     {
         CurrentHealth -= damage;
+        if (health_ui != null) health_ui.UpdateHealthUI(CurrentHealth);
+        
         if (CurrentHealth <= 0)
         {
             CurrentHealth = 0;
@@ -211,10 +204,20 @@ public class Player : MonoBehaviour
     {
         rb.linearVelocity = Vector2.zero; 
         isDead = true;
+        StartCoroutine(Restart());
         playerCollider.enabled = false; // ปิดการชนเพื่อไม่ให้เกิดปัญหาหลังจากตาย
         deadbox.SetActive(true);
         // เพิ่มการเล่นอนิเมชันตายที่นี่ (ถ้ามี)
     }
+
+    IEnumerator Restart()
+    {
+        GamePlayScene gameplay = GameObject.FindAnyObjectByType<GamePlayScene>();
+        gameplay.isPlayeralive = false;
+        yield return new WaitForSeconds(3.0f);
+        gameplay.GoHome();
+    }
+
     #endregion
 
     #region Misc

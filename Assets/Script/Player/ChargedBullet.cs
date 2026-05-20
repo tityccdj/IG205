@@ -3,12 +3,13 @@ using UnityEngine;
 public class ChargedBullet : MonoBehaviour
 {
     [SerializeField] private float baseSpeed = 13;
-    [SerializeField] private float basedamage = 40f;
+    [SerializeField] private float basedamage;
     public GameObject hitParticle;
     public GameObject FullhitParticle;
     public float randomRotationRange = 360f;
     float damage;
     Rigidbody2D rb;
+    [SerializeField] private float rotationSpeed = 500f;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     private void Awake()
     {
@@ -16,6 +17,7 @@ public class ChargedBullet : MonoBehaviour
     }
     void Start()
     {
+        
         float randomRotation = Random.Range(-randomRotationRange, randomRotationRange);
         rb.rotation += randomRotation;
         Destroy(gameObject, 5f);
@@ -24,10 +26,14 @@ public class ChargedBullet : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        transform.Rotate(0, 0, -rotationSpeed * Time.deltaTime);
     }
     public void Shoot(float chargePercent)
     {
+        if (GameManager.Instance != null)
+        {
+            basedamage = GameManager.Instance.Damage * 3.5f;
+        }
         float bulletSpeed = baseSpeed * chargePercent;
         damage = basedamage * chargePercent;
         damage = chargePercent>=0.95 ? damage*1.5f : damage;
@@ -40,36 +46,36 @@ public class ChargedBullet : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Enemy"))
-        {
-            if (collision.GetComponent<Enemy>() != null)
-            {
-                if (damage >= basedamage * 1.5f)
-                {
-                    Instantiate(FullhitParticle, transform.position, Quaternion.identity);
-                    collision.GetComponent<Enemy>().Knockback(0.7f,10f);
+        {     
+                Enemy enemy = collision.GetComponent<Enemy>();
+                Flyer flyer = collision.GetComponent<Flyer>();
 
-                }
-                else
+                if (enemy != null)
                 {
-                    Instantiate(hitParticle, transform.position, Quaternion.identity);
-                    collision.GetComponent<Enemy>().Knockback(0.4f,5f);
+                    if (damage >= basedamage * 1.5f)
+                    {
+                        Instantiate(FullhitParticle, transform.position, Quaternion.identity);
+                        enemy.Knockback(0.7f, 10f);
+                    }
+                    else
+                    {
+                        Instantiate(hitParticle, transform.position, Quaternion.identity);
+                        enemy.Knockback(0.4f, 5f);
+                    }
+                    enemy.TakeDamage(damage); // เรียกใช้ผ่านตัวแปร enemy ได้เลย ไม่ต้อง GetComponent ใหม่
                 }
-                collision.GetComponent<Enemy>().TakeDamage(damage);
-                
-            }
-
-            if(collision.GetComponent<Flyer>() != null)
-            {
-                if (damage >= basedamage * 1.5f)
+                else if(flyer != null)
                 {
-                    Instantiate(FullhitParticle, transform.position, Quaternion.identity);
+                    if (damage >= basedamage * 1.5f)
+                    {
+                        Instantiate(FullhitParticle, transform.position, Quaternion.identity);
+                    }
+                    else
+                    {
+                        Instantiate(hitParticle, transform.position, Quaternion.identity);
+                    }
+                    flyer.TakeDamage(damage);
                 }
-                else
-                {
-                    Instantiate(hitParticle, transform.position, Quaternion.identity);
-                }
-                collision.GetComponent<Flyer>().TakeDamage(damage);
-            }
             Destroy(gameObject);
         }
         
