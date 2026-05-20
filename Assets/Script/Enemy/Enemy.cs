@@ -145,7 +145,7 @@ public class Enemy : MonoBehaviour
             Die();
         }
     }
-    private void Die()
+    protected void Die()
     {
         StartCoroutine(DeadMove(0.5f));
         BoxCollider2D.enabled = false;

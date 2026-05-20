@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class ChargedBullet : MonoBehaviour
 {
-    [SerializeField] private float baseSpeed = 10;
+    [SerializeField] private float baseSpeed = 13;
     [SerializeField] private float basedamage = 40f;
     public GameObject hitParticle;
     public GameObject FullhitParticle;
@@ -56,6 +56,19 @@ public class ChargedBullet : MonoBehaviour
                 }
                 collision.GetComponent<Enemy>().TakeDamage(damage);
                 
+            }
+
+            if(collision.GetComponent<Flyer>() != null)
+            {
+                if (damage >= basedamage * 1.5f)
+                {
+                    Instantiate(FullhitParticle, transform.position, Quaternion.identity);
+                }
+                else
+                {
+                    Instantiate(hitParticle, transform.position, Quaternion.identity);
+                }
+                collision.GetComponent<Flyer>().TakeDamage(damage);
             }
             Destroy(gameObject);
         }

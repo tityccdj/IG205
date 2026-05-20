@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
-    [SerializeField] private float bulletspeed = 20f;
+    [SerializeField] private float bulletspeed = 25f;
     [SerializeField] private float bulletDamage = 10f;
     [SerializeField] public GameObject hitParticle;
     Rigidbody2D rb;
@@ -38,6 +38,11 @@ public class Bullet : MonoBehaviour
                 Instantiate(hitParticle, transform.position, Quaternion.identity);
                 collision.GetComponent<Enemy>().TakeDamage(bulletDamage);
                 collision.GetComponent<Enemy>().Knockback(0.2f, 2f);
+            }
+            if(collision.GetComponent<Flyer>() != null)
+            {
+                Instantiate(hitParticle, transform.position, Quaternion.identity);
+                collision.GetComponent<Flyer>().TakeDamage(bulletDamage);
             }
             Destroy(gameObject);
         }

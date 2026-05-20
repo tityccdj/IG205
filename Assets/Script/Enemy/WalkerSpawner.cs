@@ -8,7 +8,6 @@ public class WalkerSpawner : MonoBehaviour
     private float SpawnTimer = 0.0f;
      private void FixedUpdate()
      {
-        if (!GameManager.Instance.SpawnEnemies) return;
         SpawnTimer += Time.fixedDeltaTime;
          if (SpawnTimer >= SpawnInterval)
          {
