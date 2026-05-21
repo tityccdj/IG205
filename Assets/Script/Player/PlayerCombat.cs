@@ -68,10 +68,11 @@ public class PlayerCombat : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(player.isDead) return;
+        UpdateShowWeapon();
+        if (player.isDead) return;
         UpdateMachineGun();
         UpdateChargedGun();
-        UpdateShowWeapon();
+        
         debugChargePercent = ChargePercent;
 
     }
@@ -210,6 +211,7 @@ public class PlayerCombat : MonoBehaviour
     public void UpdateShowWeapon()
         {
             if (Weapon == null) return;
+            if(player.isDead) isAttacking=false;
             Weapon.SetActive(isAttacking);
         }
     #endregion
