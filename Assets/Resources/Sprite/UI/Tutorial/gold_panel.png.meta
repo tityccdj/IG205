@@ -1,13 +1,10 @@
 fileFormatVersion: 2
-guid: 1d69728eef27ffb45b7af2ce167f504d
+guid: 4806509e5ff898347b347139455e3b00
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 7142836939156026251
-    second: "UI \u0E40\u0E02\u0E49\u0E32\u0E40\u0E01\u0E21 s 2_0"
-  - first:
-      213: 5064989825350125141
-    second: "UI \u0E40\u0E02\u0E49\u0E32\u0E40\u0E01\u0E21 s 2_1"
+      213: -9156130089914846423
+    second: gold_panel_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -78,7 +75,7 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 0
+    textureCompression: 1
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -116,13 +113,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: "UI \u0E40\u0E02\u0E49\u0E32\u0E40\u0E01\u0E21 s 2_0"
+      name: gold_panel_0
       rect:
         serializedVersion: 2
-        x: 119
-        y: 102
-        width: 2879
-        height: 1494
+        x: 0
+        y: 0
+        width: 48
+        height: 48
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -131,30 +128,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: b83feee0a54702360800000000000000
-      internalID: 7142836939156026251
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: "UI \u0E40\u0E02\u0E49\u0E32\u0E40\u0E01\u0E21 s 2_1"
-      rect:
-        serializedVersion: 2
-        x: 2957
-        y: 1590
-        width: 7
-        height: 6
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 55646f229657a4640800000000000000
-      internalID: 5064989825350125141
+      spriteID: 9233c59c134eee080800000000000000
+      internalID: -9156130089914846423
       vertices: []
       indices: 
       edges: []
@@ -173,8 +148,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      "UI \u0E40\u0E02\u0E49\u0E32\u0E40\u0E01\u0E21 s 2_0": 7142836939156026251
-      "UI \u0E40\u0E02\u0E49\u0E32\u0E40\u0E01\u0E21 s 2_1": 5064989825350125141
+      gold_panel_0: -9156130089914846423
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

@@ -1,13 +1,19 @@
 fileFormatVersion: 2
-guid: 1d69728eef27ffb45b7af2ce167f504d
+guid: e9ef9cfb1564f7243bd63315779a50e6
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 7142836939156026251
-    second: "UI \u0E40\u0E02\u0E49\u0E32\u0E40\u0E01\u0E21 s 2_0"
+      213: 8165552554548583066
+    second: Component 45_0
   - first:
-      213: 5064989825350125141
-    second: "UI \u0E40\u0E02\u0E49\u0E32\u0E40\u0E01\u0E21 s 2_1"
+      213: 8571242158320464185
+    second: Component 45_1
+  - first:
+      213: -3198620199051821942
+    second: Component 45_2
+  - first:
+      213: -6591359803544447006
+    second: Component 45_3
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -40,7 +46,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 0
+    filterMode: 1
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -78,7 +84,7 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 0
+    textureCompression: 1
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -116,13 +122,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: "UI \u0E40\u0E02\u0E49\u0E32\u0E40\u0E01\u0E21 s 2_0"
+      name: Component 45_0
       rect:
         serializedVersion: 2
-        x: 119
-        y: 102
-        width: 2879
-        height: 1494
+        x: 1099
+        y: 1652
+        width: 826
+        height: 376
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -131,18 +137,18 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: b83feee0a54702360800000000000000
-      internalID: 7142836939156026251
+      spriteID: a9ad6a019ced15170800000000000000
+      internalID: 8165552554548583066
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: "UI \u0E40\u0E02\u0E49\u0E32\u0E40\u0E01\u0E21 s 2_1"
+      name: Component 45_1
       rect:
         serializedVersion: 2
-        x: 2957
-        y: 1590
+        x: 1676
+        y: 2020
         width: 7
         height: 6
       alignment: 0
@@ -153,8 +159,52 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 55646f229657a4640800000000000000
-      internalID: 5064989825350125141
+      spriteID: 9313b82a45b23f670800000000000000
+      internalID: 8571242158320464185
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Component 45_2
+      rect:
+        serializedVersion: 2
+        x: 1095
+        y: 1946
+        width: 11
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a8c702040e73c93d0800000000000000
+      internalID: -3198620199051821942
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Component 45_3
+      rect:
+        serializedVersion: 2
+        x: 1146
+        y: 1647
+        width: 12
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2e7d1f26e29c684a0800000000000000
+      internalID: -6591359803544447006
       vertices: []
       indices: 
       edges: []
@@ -173,8 +223,10 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      "UI \u0E40\u0E02\u0E49\u0E32\u0E40\u0E01\u0E21 s 2_0": 7142836939156026251
-      "UI \u0E40\u0E02\u0E49\u0E32\u0E40\u0E01\u0E21 s 2_1": 5064989825350125141
+      Component 45_0: 8165552554548583066
+      Component 45_1: 8571242158320464185
+      Component 45_2: -3198620199051821942
+      Component 45_3: -6591359803544447006
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

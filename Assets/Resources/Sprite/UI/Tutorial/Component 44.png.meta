@@ -1,28 +1,28 @@
 fileFormatVersion: 2
-guid: 88f100a76872ef743904e9f7441cbb2f
+guid: 1d654ad990817e742bfbe6f7a780c5ab
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -8813151330594458593
-    second: Face.Up Canvas 1_0
+      213: 7228654828311731928
+    second: Component 44_0
   - first:
-      213: 4558788080442342049
-    second: Face.Up Canvas 1_1
+      213: -1558889102122209505
+    second: Component 44_1
   - first:
-      213: -2842519596910672255
-    second: Face.Up Canvas 1_2
+      213: -6938637880408452370
+    second: Component 44_2
   - first:
-      213: 8612327367835622220
-    second: Face.Up Canvas 1_3
+      213: -6855860923074718856
+    second: Component 44_3
   - first:
-      213: 1808246351862472592
-    second: Face.Up Canvas 1_4
+      213: 9119808934145732510
+    second: Component 44_4
   - first:
-      213: -7604929416598995024
-    second: Face.Up Canvas 1_5
+      213: 5484982416003440495
+    second: Component 44_5
   - first:
-      213: 1883798552340387072
-    second: Face.Up Canvas 1_6
+      213: -5519034523261850757
+    second: Component 44_6
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -55,7 +55,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 0
+    filterMode: 1
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -69,7 +69,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 1024
+  spritePixelsToUnits: 100
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -93,7 +93,7 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 0
+    textureCompression: 1
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -131,13 +131,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Face.Up Canvas 1_0
+      name: Component 44_0
       rect:
         serializedVersion: 2
-        x: 1115
-        y: 351
-        width: 9782
-        height: 3286
+        x: 989
+        y: 1269
+        width: 936
+        height: 362
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -146,41 +146,41 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: f14f7241f8561b580800000000000000
-      internalID: -8813151330594458593
+      spriteID: 8dede6d6447515460800000000000000
+      internalID: 7228654828311731928
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Face.Up Canvas 1_1
+      name: Component 44_1
       rect:
         serializedVersion: 2
-        x: 1450
-        y: 3635
-        width: 9
-        height: 9
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 1aafc0d0b91144f30800000000000000
-      internalID: 4558788080442342049
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Face.Up Canvas 1_2
-      rect:
-        serializedVersion: 2
-        x: 1613
-        y: 3636
+        x: 1676
+        y: 1623
         width: 7
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f1f27c7fe96bd5ae0800000000000000
+      internalID: -1558889102122209505
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Component 44_2
+      rect:
+        serializedVersion: 2
+        x: 987
+        y: 1495
+        width: 8
         height: 7
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -190,85 +190,41 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 1868d07ac775d88d0800000000000000
-      internalID: -2842519596910672255
+      spriteID: ee25f293c9105bf90800000000000000
+      internalID: -6938637880408452370
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Face.Up Canvas 1_3
+      name: Component 44_3
       rect:
         serializedVersion: 2
-        x: 1107
-        y: 2481
-        width: 9
-        height: 8
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: c4b97396c12258770800000000000000
-      internalID: 8612327367835622220
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Face.Up Canvas 1_4
-      rect:
-        serializedVersion: 2
-        x: 10895
-        y: 2099
-        width: 11
-        height: 11
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 09f982df97e281910800000000000000
-      internalID: 1808246351862472592
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Face.Up Canvas 1_5
-      rect:
-        serializedVersion: 2
-        x: 10895
-        y: 2054
-        width: 11
-        height: 11
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 0bfb2bdfcfcd57690800000000000000
-      internalID: -7604929416598995024
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Face.Up Canvas 1_6
-      rect:
-        serializedVersion: 2
-        x: 7900
-        y: 344
+        x: 984
+        y: 1488
         width: 7
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 87356aa70d61bd0a0800000000000000
+      internalID: -6855860923074718856
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Component 44_4
+      rect:
+        serializedVersion: 2
+        x: 1779
+        y: 1269
+        width: 10
         height: 7
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -278,8 +234,52 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 005d4a47dc8942a10800000000000000
-      internalID: 1883798552340387072
+      spriteID: e9fa03328e1109e70800000000000000
+      internalID: 9119808934145732510
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Component 44_5
+      rect:
+        serializedVersion: 2
+        x: 1790
+        y: 1273
+        width: 7
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f6f162952729e1c40800000000000000
+      internalID: 5484982416003440495
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Component 44_6
+      rect:
+        serializedVersion: 2
+        x: 1806
+        y: 1273
+        width: 14
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b7b2cd997537863b0800000000000000
+      internalID: -5519034523261850757
       vertices: []
       indices: 
       edges: []
@@ -288,7 +288,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 5e97eb03825dee720800000000000000
+    spriteID: 
     internalID: 0
     vertices: []
     indices: 
@@ -298,13 +298,13 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Face.Up Canvas 1_0: -8813151330594458593
-      Face.Up Canvas 1_1: 4558788080442342049
-      Face.Up Canvas 1_2: -2842519596910672255
-      Face.Up Canvas 1_3: 8612327367835622220
-      Face.Up Canvas 1_4: 1808246351862472592
-      Face.Up Canvas 1_5: -7604929416598995024
-      Face.Up Canvas 1_6: 1883798552340387072
+      Component 44_0: 7228654828311731928
+      Component 44_1: -1558889102122209505
+      Component 44_2: -6938637880408452370
+      Component 44_3: -6855860923074718856
+      Component 44_4: 9119808934145732510
+      Component 44_5: 5484982416003440495
+      Component 44_6: -5519034523261850757
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

@@ -1,9 +1,9 @@
-﻿using TMPro;
+﻿using System.Collections;
+using TMPro;
 using UnityEngine;
 
 public class HouseManager : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
     [Header("Panels (หน้าต่างของแต่ละอัปเกรด)")]
     [SerializeField] private GameObject healthPanel;
     [SerializeField] private GameObject dropChancePanel;
@@ -21,17 +21,72 @@ public class HouseManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI FailedMoneyTxt;
 
     [Header("Stats")]
-    [SerializeField]private TextMeshProUGUI HealthText;
+    [SerializeField] private TextMeshProUGUI HealthText;
     [SerializeField] private TextMeshProUGUI DamageText;
     [SerializeField] private TextMeshProUGUI DropText;
     [SerializeField] private TextMeshProUGUI Leveltext;
+
+    [Header("Animation Settings")]
+    [SerializeField] private float animSpeed = 15f; // ความเร็วในการขยาย/หด
+    private GameObject currentOpenPanel = null; // ตัวแปรจำว่าหน้าต่างไหนกำลังเปิดอยู่
+
     private void Start()
     {
-        Leveltext.text = "Level: "+GameManager.Instance.CurrentLevel;
-        // ปิดทุกหน้าต่างตอนเริ่มเกมเพื่อความชัวร์
-        CloseAllPanels();
+        Leveltext.text = "Level: " + GameManager.Instance.CurrentLevel;
+
+        // 1. จับทุกหน้าต่างย่อสเกลเป็น 0 ตั้งแต่เริ่มเกม
+        SetInitialScaleZero(healthPanel);
+        SetInitialScaleZero(dropChancePanel);
+        SetInitialScaleZero(damagePanel);
+        SetInitialScaleZero(ExChangePanel);
+
+        // 2. ไม่มีหน้าต่างไหนเปิดอยู่
+        currentOpenPanel = null;
+
         Updatemoney();
         UpdateStats();
+    }
+
+    private void Update()
+    {
+        // ให้ระบบคอยคำนวณการขยาย/หด ของหน้าต่างตลอดเวลาอย่างนุ่มนวล
+        SmoothScalePanel(healthPanel);
+        SmoothScalePanel(dropChancePanel);
+        SmoothScalePanel(damagePanel);
+        SmoothScalePanel(ExChangePanel);
+    }
+
+    // ฟังก์ชันย่อขนาดเป็น 0 ทันทีตอนเริ่มเกม
+    private void SetInitialScaleZero(GameObject panel)
+    {
+        if (panel != null)
+        {
+            panel.transform.localScale = Vector3.zero;
+            panel.SetActive(false);
+        }
+    }
+
+    // ฟังก์ชันคำนวณอนิเมชั่น
+    private void SmoothScalePanel(GameObject panel)
+    {
+        if (panel == null) return;
+
+        // ถ้าแผงนี้คือแผงที่กำลังเปิด เป้าหมายสเกลคือ 1 (โชว์), ถ้าไม่ใช่เป้าหมายคือ 0 (ซ่อน)
+        Vector3 targetScale = (panel == currentOpenPanel) ? Vector3.one : Vector3.zero;
+
+        // ค่อยๆ ปรับขนาดปัจจุบันไปหาเป้าหมาย
+        panel.transform.localScale = Vector3.Lerp(panel.transform.localScale, targetScale, Time.deltaTime * animSpeed);
+
+        // จัดการเปิด/ปิด GameObject (SetActive) เพื่อประหยัดทรัพยากรตอนที่มองไม่เห็นแล้ว
+        if (panel.transform.localScale.x > 0.05f && !panel.activeSelf)
+        {
+            panel.SetActive(true); // เปิดให้ทำงานเมื่อสเกลเริ่มขยาย
+        }
+        else if (panel.transform.localScale.x <= 0.05f && panel.activeSelf && targetScale == Vector3.zero)
+        {
+            panel.transform.localScale = Vector3.zero; // ล็อคให้เป็น 0 เป๊ะๆ กันเศษทศนิยม
+            panel.SetActive(false); // ปิดการทำงานเมื่อสเกลหดจนมองไม่เห็นแล้ว
+        }
     }
 
     // ==========================================
@@ -40,46 +95,36 @@ public class HouseManager : MonoBehaviour
 
     public void OpenHealthPanel()
     {
-        CloseAllPanels(); // สั่งปิดหน้าต่างอื่นก่อนกันมันซ้อนทับกัน
-        healthPanel.SetActive(true);
-
-        // 🌟 ดึงราคาจาก GameManager มาโชว์ที่ Text ทันที
+        currentOpenPanel = healthPanel; // บอกให้ระบบรู้ว่านี่คือหน้าต่างหลัก (เดี๋ยว Update จะขยายให้เอง)
         if (healthPriceTxt != null)
             healthPriceTxt.text = "x " + GameManager.Instance.costUpgradeHealth;
     }
 
     public void OpenDropChancePanel()
     {
-        CloseAllPanels();
-        dropChancePanel.SetActive(true);
-
+        currentOpenPanel = dropChancePanel;
         if (dropChancePriceTxt != null)
             dropChancePriceTxt.text = "x " + GameManager.Instance.costUpgradeDrop;
     }
 
     public void OpenDamagePanel()
     {
-        CloseAllPanels();
-        damagePanel.SetActive(true);
-
+        currentOpenPanel = damagePanel;
         if (damagePriceTxt != null)
             damagePriceTxt.text = "x " + GameManager.Instance.costUpgradeDamage;
     }
+
     public void OpenExchange()
     {
-        CloseAllPanels();
-        ExChangePanel.SetActive(true);
+        currentOpenPanel = ExChangePanel;
         if (ExchangePriceTxt != null)
             ExchangePriceTxt.text = "x 3";
     }
 
-    // ฟังก์ชันตัวช่วยสำหรับปิดทุกหน้าต่างพร้อมกัน
+    // ฟังก์ชันนี้ตอนนี้มีหน้าที่แค่ "ล้างค่า" เพื่อให้ทุกหน้าต่างหดกลับไปเป็น 0 ครับ
     public void CloseAllPanels()
     {
-        if (healthPanel != null) healthPanel.SetActive(false);
-        if (dropChancePanel != null) dropChancePanel.SetActive(false);
-        if (damagePanel != null) damagePanel.SetActive(false);
-        if (ExChangePanel != null) ExChangePanel.SetActive(false);
+        currentOpenPanel = null;
     }
 
     // ==========================================
@@ -91,7 +136,6 @@ public class HouseManager : MonoBehaviour
         GameManager.Instance.PurchaseUpgradeHealth();
         UpdateStats();
         Updatemoney();
-        // อัปเดตตัวเลขราคาใหม่หลังจากซื้อสำเร็จ
         if (healthPriceTxt != null) healthPriceTxt.text = "x " + GameManager.Instance.costUpgradeHealth;
     }
 
@@ -110,6 +154,7 @@ public class HouseManager : MonoBehaviour
         Updatemoney();
         if (damagePriceTxt != null) damagePriceTxt.text = "x " + GameManager.Instance.costUpgradeDamage;
     }
+
     public void Exchange()
     {
         GameManager.Instance.ExchangeFailedToGood();
@@ -127,6 +172,6 @@ public class HouseManager : MonoBehaviour
     {
         HealthText.text = GameManager.Instance.MaxHealth.ToString();
         DamageText.text = GameManager.Instance?.Damage.ToString();
-        DropText.text = GameManager.Instance.DropChance+"%";
+        DropText.text = GameManager.Instance.DropChance + "%";
     }
 }

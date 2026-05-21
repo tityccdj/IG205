@@ -57,12 +57,7 @@ public class InventoryManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.I))
-        {
-            // ทดสอบการเก็บไอเทมเข้ากระเป๋า
-            AddItem(ItemType.Bulb, 1); // เก็บหลอดไฟเพิ่ม 1 ชิ้น
-            AddItem(ItemType.Glass, 2); // เก็บแก้วเพิ่ม 2 ชิ้น
-        }
+
     }
     public void RemoveItem(ItemType type, int amount)
     {

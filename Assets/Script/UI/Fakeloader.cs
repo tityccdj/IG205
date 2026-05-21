@@ -13,5 +13,9 @@ public class Fakeloader : MonoBehaviour
     void Update()
     {
         canva.alpha -=Time.deltaTime;
+        if (canva.alpha < 0)
+        {
+            Destroy(gameObject);
+        }
     }
 }
